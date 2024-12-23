@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import AdminPage from './pages/AdminPage';
+import UserPage from './pages/UserPage';
+import LoginPage from './pages/LoginPage';
+import RecoveryPage from './pages/RecoveryPage';
+import RegisterPage from './pages/RegisterPage';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <AppContent />
+    </Router>
+  );
+};
+
+const AppContent = () => {
+  const location = useLocation();
+
+  const isAuthenticated = true; // Aquí debes poner tu lógica de autenticación
+  const userRole = "admin"; // Aquí debes poner tu lógica para obtener el rol del usuario autenticado
+  const PrivateRoute = ({ children, role }) => {
+    return isAuthenticated && userRole === role ? children : <Navigate to="/login" />;
+  };
+
+  useEffect(() => { 
+    if (location.pathname === '/login') { 
+      document.body.className = 'login-bg'; 
+    } else if (location.pathname === '/register') { 
+      document.body.className = 'register-bg'; 
+    } else { 
+      document.body.className = ''; 
+    } 
+  }, [location]);
+
+  return (<Routes>
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
+    <Route path="/recovery" element={<RecoveryPage />} />
+    <Route
+      path="/admin/*"
+      element={
+        <PrivateRoute role="admin">
+          <AdminPage />
+        </PrivateRoute>
+      }
+    />
+    <Route
+      path="/user/*"
+      element={
+        <PrivateRoute role="user">
+          <UserPage />
+        </PrivateRoute>
+      }
+    />
+    <Route path="/" element={<Navigate to="/login" />} />
+  </Routes>)
 }
 
-export default App
+export default App;
