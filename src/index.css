@@ -10,6 +10,7 @@
 
 body { 
   font-family: 'Roboto', sans-serif; 
+  min-height: 100vh;
 }
 
 a {
@@ -27,4 +28,41 @@ body.register-bg {
   background-image: url('https://image.freepik.com/foto-gratis/mujer-negocios-morena-haciendo-negociacion_23-2148142802.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+body.password-bg {
+  background-image: url('https://image.freepik.com/foto-gratis/mujer-negocios-morena-haciendo-negociacion_23-2148142802.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Estilos para navegadores webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Hace el fondo transparente */
+}
+
+::-webkit-scrollbar-thumb {
+  background: red; /* Color del pulgar del scrollbar */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: darkred; /* Color al pasar el cursor sobre el pulgar */
+}
+
+/* Estilos para Firefox */
+* {
+  scrollbar-width: thin; /* Define el grosor del scrollbar */
+  scrollbar-color: red transparent; /* Define el color del pulgar y la pista del scrollbar */
+}
+
+/* Estilos universales para elementos con scrollbar */
+body, html {
+  scrollbar-width: thin; /* Define el grosor del scrollbar para Firefox */
+  scrollbar-color: red transparent; /* Define el color del pulgar y la pista del scrollbar para Firefox */
 }
